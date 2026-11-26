@@ -1,0 +1,20 @@
+# Archivos compilados de Java
+*.class
+*.jar
+out/
+bin/
+build/
+target/
+
+# Configuración privada de IDEs
+.idea/
+*.iml
+.vscode/
+nbproject/private/
+.settings/
+.project
+.classpath
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
