@@ -12,8 +12,8 @@ aplica descuentos según el tipo de cliente, recargo por envío urgente e IVA.
 ## Compilar y ejecutar
 
 ```bash
-javac -d out src/*.java
-java -cp out FacturacionTienda
+javac -d out src/tienda/*.java
+java -cp out tienda.FacturacionTienda
 ```
 
 Práctica P2.1 — Entornos de Desarrollo (1.º DAW).
