@@ -2,35 +2,58 @@ package tienda;
 
 public final class FacturacionTienda {
 
+    public static final int CLIENTE_ESTUDIANTE = 1;
+
+    public static final int CLIENTE_JUBILADO = 2;
+
+    private static final double DESCUENTO_ESTUDIANTE = 0.10;
+
+    private static final double DESCUENTO_JUBILADO = 0.15;
+
+    private static final double SIN_DESCUENTO = 0.0;
+
+    private static final double GASTOS_ENVIO_URGENTE = 4.95;
+
+    private static final double FACTOR_IVA = 1.21;
+
     private FacturacionTienda() {
         // Clase de utilidad: no se instancia
     }
 
     public static void main(final String[] args) {
-        // Prueba de funcionamiento:
-        // precioBase = 100.0, unidades = 2, tipoCliente = 1 (estudiante), conEnvio = true
-        double resultado = calc(100.0, 2, 1, true);
-        System.out.println("Importe total a pagar: " + resultado);
+        double importeTotal = calcularImporteTotal(100.0, 2, CLIENTE_ESTUDIANTE, true);
+        System.out.println("Importe total a pagar: " + importeTotal);
     }
 
-    public static double calc(final double p, final int c, final int t, final boolean e) {
-        double subtotal = p * c;
+    public static double calcularImporteTotal(final double precioBase, final int unidades,
+            final int tipoCliente, final boolean conEnvio) {
+        double subtotal = calcularSubtotal(precioBase, unidades);
+        subtotal = aplicarDescuento(subtotal, tipoCliente);
+        subtotal = aplicarGastosEnvio(subtotal, conEnvio);
+        return aplicarIva(subtotal);
+    }
 
-        // Descuento según tipo de cliente: 1 = Estudiante (10%), 2 = Jubilado (15%)
-        if (t == 1) {
-            subtotal = subtotal - subtotal * 0.10;
-        } else if (t == 2) {
-            subtotal = subtotal - subtotal * 0.15;
-        }
+    private static double calcularSubtotal(final double precioBase, final int unidades) {
+        return precioBase * unidades;
+    }
 
-        // Recargo por gastos de envío urgente a domicilio
-        if (e) {
-            subtotal = subtotal + 4.95;
-        }
+    private static double obtenerPorcentajeDescuento(final int tipoCliente) {
+        return switch (tipoCliente) {
+            case CLIENTE_ESTUDIANTE -> DESCUENTO_ESTUDIANTE;
+            case CLIENTE_JUBILADO -> DESCUENTO_JUBILADO;
+            default -> SIN_DESCUENTO;
+        };
+    }
 
-        // Impuesto general indirecto (IVA 21%)
-        double total = subtotal * 1.21;
+    private static double aplicarDescuento(final double subtotal, final int tipoCliente) {
+        return subtotal - subtotal * obtenerPorcentajeDescuento(tipoCliente);
+    }
 
-        return total;
+    private static double aplicarGastosEnvio(final double subtotal, final boolean conEnvio) {
+        return conEnvio ? subtotal + GASTOS_ENVIO_URGENTE : subtotal;
+    }
+
+    private static double aplicarIva(final double subtotal) {
+        return subtotal * FACTOR_IVA;
     }
 }
