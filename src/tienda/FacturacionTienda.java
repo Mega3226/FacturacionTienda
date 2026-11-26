@@ -22,6 +22,9 @@ public final class FacturacionTienda {
     /** Código del tipo de cliente jubilado (descuento del 15&nbsp;%). */
     public static final int CLIENTE_JUBILADO = 2;
 
+    /** Código del tipo de cliente VIP (descuento del 20&nbsp;%). */
+    public static final int CLIENTE_VIP = 3;
+
     /** Código del tipo de cliente familia numerosa (descuento del 12&nbsp;%). */
     public static final int CLIENTE_FAMILIA_NUMEROSA = 4;
 
@@ -30,6 +33,9 @@ public final class FacturacionTienda {
 
     /** Porcentaje de descuento para jubilados (15&nbsp;%). */
     private static final double DESCUENTO_JUBILADO = 0.15;
+
+    /** Porcentaje de descuento para VIP (20&nbsp;%). */
+    private static final double DESCUENTO_VIP = 0.20;
 
     /** Porcentaje de descuento para familia numerosa (12&nbsp;%). */
     private static final double DESCUENTO_FAMILIA_NUMEROSA = 0.12;
@@ -67,8 +73,9 @@ public final class FacturacionTienda {
      * @param precioBase  precio unitario del producto en euros
      * @param unidades    número de unidades compradas
      * @param tipoCliente tipo de cliente: {@link #CLIENTE_ESTUDIANTE},
-     *                    {@link #CLIENTE_JUBILADO} o cualquier otro valor
-     *                    para un cliente sin descuento
+     *                    {@link #CLIENTE_JUBILADO}, {@link #CLIENTE_VIP},
+     *                    {@link #CLIENTE_FAMILIA_NUMEROSA} o cualquier otro
+     *                    valor para un cliente sin descuento
      * @param conEnvio    {@code true} si se añade el envío urgente a domicilio
      * @return importe total en euros, con IVA incluido
      */
@@ -101,6 +108,7 @@ public final class FacturacionTienda {
         return switch (tipoCliente) {
             case CLIENTE_ESTUDIANTE -> DESCUENTO_ESTUDIANTE;
             case CLIENTE_JUBILADO -> DESCUENTO_JUBILADO;
+            case CLIENTE_VIP -> DESCUENTO_VIP;
             case CLIENTE_FAMILIA_NUMEROSA -> DESCUENTO_FAMILIA_NUMEROSA;
             default -> SIN_DESCUENTO;
         };
