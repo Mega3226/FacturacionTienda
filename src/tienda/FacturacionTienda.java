@@ -22,11 +22,17 @@ public final class FacturacionTienda {
     /** Código del tipo de cliente jubilado (descuento del 15&nbsp;%). */
     public static final int CLIENTE_JUBILADO = 2;
 
+    /** Código del tipo de cliente familia numerosa (descuento del 12&nbsp;%). */
+    public static final int CLIENTE_FAMILIA_NUMEROSA = 4;
+
     /** Porcentaje de descuento para estudiantes (10&nbsp;%). */
     private static final double DESCUENTO_ESTUDIANTE = 0.10;
 
     /** Porcentaje de descuento para jubilados (15&nbsp;%). */
     private static final double DESCUENTO_JUBILADO = 0.15;
+
+    /** Porcentaje de descuento para familia numerosa (12&nbsp;%). */
+    private static final double DESCUENTO_FAMILIA_NUMEROSA = 0.12;
 
     /** Porcentaje aplicado a clientes sin descuento. */
     private static final double SIN_DESCUENTO = 0.0;
@@ -95,6 +101,7 @@ public final class FacturacionTienda {
         return switch (tipoCliente) {
             case CLIENTE_ESTUDIANTE -> DESCUENTO_ESTUDIANTE;
             case CLIENTE_JUBILADO -> DESCUENTO_JUBILADO;
+            case CLIENTE_FAMILIA_NUMEROSA -> DESCUENTO_FAMILIA_NUMEROSA;
             default -> SIN_DESCUENTO;
         };
     }
