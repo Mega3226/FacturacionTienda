@@ -1,0 +1,32 @@
+name: CI Java
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Compilar con linter estricto (sin avisos)
+        run: javac -Xlint:all -Xdoclint:all -Werror -d out src/tienda/*.java
+
+      - name: Ejecutar y verificar la salida
+        run: |
+          java -cp out tienda.FacturacionTienda > salida.txt
+          cat salida.txt
+          diff salida.txt tests/salida_esperada.txt
+
+      - name: Generar Javadoc
+        run: javadoc -quiet -d build-docs -sourcepath src -encoding UTF-8 -docencoding UTF-8 -charset UTF-8 tienda

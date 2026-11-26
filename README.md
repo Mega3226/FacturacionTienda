@@ -17,3 +17,8 @@ java -cp out tienda.FacturacionTienda
 ```
 
 Práctica P2.1 — Entornos de Desarrollo (1.º DAW).
+
+## Integración continua
+
+Cada `push` y cada Pull Request lanza el workflow `.github/workflows/ci.yml`, que compila
+sin avisos, ejecuta el programa, compara su salida con `tests/salida_esperada.txt` y genera el Javadoc.
